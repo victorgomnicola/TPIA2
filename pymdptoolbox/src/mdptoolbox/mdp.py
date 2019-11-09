@@ -265,7 +265,8 @@ class MDP(object):
         # Get the policy and value, for now it is being returned but...
         # Which way is better?
         # 1. Return, (policy, value)
-        return (Q.argmax(axis=0), Q.max(axis=0))
+        #MUDAMOS ESSA PORCARIA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return (Q.argmin(axis=0), Q.min(axis=0))
         # 2. update self.policy and self.V directly
         # self.V = Q.max(axis=1)
         # self.policy = Q.argmax(axis=1)

@@ -1,6 +1,10 @@
-import mdptoolbox, mdptoolbox.example
-P, R = mdptoolbox.example.forest()
-vi = mdptoolbox.mdp.ValueIteration(P, R, 0.96)
+import pymdptoolbox.src.mdptoolbox.example as ex 
+import pymdptoolbox.src.mdptoolbox.mdp as mdp
+
+P, R = ex.forest()
+vi = mdp.ValueIteration(P, R, 0.96)
+print(type(P))
+print(P.shape)
 
 vi.verbose
 
