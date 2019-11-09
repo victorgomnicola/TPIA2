@@ -9,10 +9,10 @@ def carrega_arquivo(nome_arquivo):
 	curenty_action = ''
 	list_states = []
 	dict_actions = {}
-	initialstate = ''
-	goalstate = ''
+	initial_state = ''
+	goal_state = ''
 
-	session = [['states', 'endstates'], ['action', 'endaction'], ['cost', 'endcost'], ['initialstate', 'endinitialstate'], ['goalstate', 'endgoalstate']]
+	session = [['states', 'endstates'], ['action', 'endaction'], ['cost', 'endcost'], ['initial_state', 'endinitial_state'], ['goal_state', 'endgoal_state']]
 	curenty_session = ''
 
 	index_to_state = {}
@@ -100,13 +100,13 @@ def carrega_arquivo(nome_arquivo):
 	        elif columns[0] == session[2][1]:
 	            curent_action = ''
 
-	        elif columns[0] == 'initialstate':
+	        elif columns[0] == 'initial_state':
 	            curenty_session = session[3][0]
 	        
 	        elif columns[0] == session[3][1]:
 	            curent_action = ''
 
-	        elif columns[0] == 'goalstate':
+	        elif columns[0] == 'goal_state':
 	            curenty_session = session[4][0]
 	        
 	        elif columns[0] == session[4][1]:
@@ -133,11 +133,11 @@ def carrega_arquivo(nome_arquivo):
 	                elif curenty_session == session[2][0]: #cost
 	                    cost = 1
 	                
-	                elif curenty_session == session[3][0]: #initialstate
-	                    initialstate = columns[0]
+	                elif curenty_session == session[3][0]: #initial_state
+	                    initial_state = columns[0]
 	                
-	                elif curenty_session == session[4][0]: #goalstate
-	                    goalstate = columns[0]
+	                elif curenty_session == session[4][0]: #goal_state
+	                    goal_state = columns[0]
 
 
 	matrix_probabilties = [matrix_move_south, matrix_move_north, matrix_move_west, matrix_move_east]
@@ -147,8 +147,17 @@ def carrega_arquivo(nome_arquivo):
 
 if __name__ == "__main__":
 
-	nome_arquivo = "C:/Users/Trevisan/Desktop/8 sem/Tópicos em Planejamento de Inteligencia Artificial/EP2/TestesGrid/DeterministicGoalState/navigation_1.net"
+	nome_arquivo = "C:/Users/Avell/Documents/2019 - 02/TPIA/EP2/TPIA2/TestesGrid/DeterministicGoalState/navigation_1.net"
 
 	matrix_probabilties, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state = carrega_arquivo(nome_arquivo)
 
-	vi = mdp.ValueIteration(matrix_probabilties, matrix_costs, 0.96)
+	vi = mdp.ValueIteration(matrix_probabilties, matrix_costs, 0.96, skip_check=True)
+
+	vi.verbose
+
+	vi.run()
+
+	print('politica')
+	print(vi.policy)
+	print('iteracoes?')
+	print(vi.iter)

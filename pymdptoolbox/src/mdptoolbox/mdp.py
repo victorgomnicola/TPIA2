@@ -218,7 +218,7 @@ class MDP(object):
         self.R = self._computeReward(reward, transitions)
 
         # the verbosity is by default turned off
-        self.verbose = False
+        self.verbose = True
         # Initially the time taken to perform the computations is set to None
         self.time = None
         # set the initial iteration count to zero
@@ -1510,7 +1510,7 @@ class ValueIterationGS(ValueIteration):
     """
 
     def __init__(self, transitions, reward, discount, epsilon=0.01,
-                 max_iter=10, initial_value=0, skip_check=False):
+                 max_iter=10, initial_value=0, skip_check=True):
         # Initialise a value iteration Gauss-Seidel MDP.
 
         MDP.__init__(self, transitions, reward, discount, epsilon, max_iter,
