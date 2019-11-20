@@ -180,7 +180,7 @@ class MDP(object):
     """
 
     def __init__(self, transitions, reward, discount, epsilon, max_iter,
-                 skip_check=False):
+                 skip_check = False):
         # Initialise a MDP based on the input parameters.
 
         # if the discount is None then the algorithm is assumed to not use it
@@ -247,6 +247,7 @@ class MDP(object):
         # on the objects V attribute
         if V is None:
             # this V should be a reference to the data rather than a copy
+            #print('deu ruim aqui no Bellman')
             V = self.V
         else:
             # make sure the user supplied V is of the right shape
@@ -266,13 +267,15 @@ class MDP(object):
         # Which way is better?
         # 1. Return, (policy, value)
         #MUDAMOS ESSA PORCARIA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return (Q.argmin(axis=0), Q.min(axis=0))
+        return (Q.argmax(axis=0), Q.max(axis=0))
         # 2. update self.policy and self.V directly
         # self.V = Q.max(axis=1)
         # self.policy = Q.argmax(axis=1)
 
     def _computeTransition(self, transition):
-        return tuple(transition[a] for a in range(self.A))
+        tupla = tuple(transition[a] for a in range(self.A))
+        print(tupla)
+        return tupla
 
     def _computeReward(self, reward, transition):
         # Compute the reward for the system in one state chosing an action.
@@ -294,6 +297,7 @@ class MDP(object):
         except (AttributeError, ValueError):
             if len(reward) == self.A:
                 r = tuple(map(self._computeMatrixReward, reward, transition))
+                print(r)
                 return r
             else:
                 return self._computeVectorReward(reward)

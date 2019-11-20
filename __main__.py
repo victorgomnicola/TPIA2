@@ -145,15 +145,28 @@ def carrega_arquivo(nome_arquivo):
 	return matrix_probabilties, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state
 
 
+
+def valueIteration(matrix_probabilties, matrix_costs, epsilon, initial_state, goal_state, list_states, gamma):
+	A = len(matrix_probabilties)
+	S = len(list_states)
+	V = np.zeros(S)
+	num_iteracoes = 0
+	while True:
+		Q = np.zeros(S, A)
+		for a in range(A):
+			 Q[:,a] = matrix_costs[:,a] + gamma*matrix_probabilties[a]*V
+
+
+
 if __name__ == "__main__":
 
 	nome_arquivo = "C:/Users/Avell/Documents/2019 - 02/TPIA/EP2/TPIA2/TestesGrid/DeterministicGoalState/navigation_1.net"
 
 	matrix_probabilties, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state = carrega_arquivo(nome_arquivo)
 
-	vi = mdp.ValueIteration(matrix_probabilties, matrix_costs, 0.96, skip_check=True)
+	vi = mdp.ValueIteration(matrix_probabilties, matrix_costs, 0.99, skip_check=True)
 
-	vi.verbose
+	#vi.verbose
 
 	vi.run()
 
