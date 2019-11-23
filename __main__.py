@@ -404,13 +404,15 @@ def rodaTudo(algoritmo, div_arquivo, det):
 					f.write(tupla)
 
 			f.write('\n\n******************** PROBLEMA ' + str(problema) +  ' - ' + d + ' - ' + alg + ' *********************\n')
-			f.write('\n******************** Politica ' + str(problema) +  ' - '  + d + ' *********************\n')
+			f.write('\n******************** Politica ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			for tupla in politica:
-				f.write(str(tupla))
+				f.write(str(tupla) + '\n')
 			f.write('\n******************** Valor ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
-			f.write(str(V))
+			
+			for v_estado in range(1, len(V)):
+				f.write(str(v_estado) + ': ' + str(V[v_estado]) + '\n')
 			f.write('\n******************** Tempo ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
-			f.write(str(t))
+			f.write(str(t) + '\n')
 			print('Pobrlema ' + str(problema) +  ' - '  + d + ' - ' + alg + 'concluido')
 	except Exception as e:
 		print("\nDeu ruim\n")
