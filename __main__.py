@@ -2,6 +2,11 @@ import sys
 import numpy as np
 from scipy.sparse import csr_matrix
 
+import time
+
+
+
+
 def carrega_arquivo(nome_arquivo,tamanhoGrid):
 
     crs = open(nome_arquivo, "r")
@@ -289,6 +294,28 @@ def rebuildGv(G, G1, V, initial_state):
     return Gv_novo
 
 
+def retorna_politica(G, grafo_otimo, V):
+    politica = []
+    
+    for estado in grafo_otimo:
+        estados_alcancaveis = []
+        acao_estado = []
+        for a in range(4):
+            if G[a][estado].getnnz() != 0:
+                for p in G[a][estado]:
+                    indice = p.indices
+                    for i in range(len(indice)):
+                        if indice[i] not in estados_alcancaveis:
+                            estados_alcancaveis.append(indice[i])
+                            acao_estado.append(a)
+                        
+
+        acao_melhor_estado = acao_estado[np.argmin(V[estados_alcancaveis])]
+        
+        politica.append((estado, acao_melhor_estado))
+
+    return politica
+    
 
 def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
     V = M.copy()
@@ -302,10 +329,9 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
     while True:
         
         cont += 1
-        print('iteracao', cont)
 
         s = melhorS(F, Gv, V)
-        
+
         if not s:
             break
 
@@ -329,4 +355,72 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
 
     return politica
 
+
+def rodaTudo(algoritmo, div_arquivo, det):
+	
+	current_milli_time = lambda: int(round(time.time() * 1000))
+
+	if div_arquivo == 0:
+		list_tamGrid = [20, 40, 60, 80, 100]
+		problemas = [1, 2, 3, 4, 5]
+	else:
+		list_tamGrid = [120, 140, 160, 180, 200]
+		problemas = [6, 7, 8, 9, 10]
+
+	if det == 0:
+		d = 'DeterministicGoalState'
+	else:
+		d = 'RandomGoalState'
+
+	resp = ''
+	cont = 0
+	if algoritmo == 0: alg = 'It_value'
+	else: alg = 'LAO'
+	f = open("resp" + alg + "_" + str(div_arquivo) + "_" + d + ".txt", "a")
+	try:
+		f.write("Inicio dos resultados\n")
+
+		for problema in problemas:
+			print('Iniciando pobreza ' + str(problema) +  ' - '  + d + ' - ' + alg)
+			tamGrid = list_tamGrid[cont]
+			cont += 1
+			nome_arquivo = "TestesGrid/" + d + "/navigation_" + str(problema) + ".net"
+			G, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state, M = carrega_arquivo(nome_arquivo, tamGrid)
+
+			S = tamGrid*tamGrid + 1
+
+
+			if algoritmo == 0:
+				V = np.zeros(S) + sys.maxsize - 1000
+				t = current_milli_time()
+				valueIteration(G, list_states, goal_state, S, 0.01, V)
+				politica = retorna_politica(G, list_states, V)
+				t = current_milli_time() - t
+			else:
+				t = current_milli_time()
+				politica = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
+				t = current_milli_time() - t
+				for tupla in politica:
+					f.write(tupla)
+
+			f.write('\n\n******************** PROBLEMA ' + str(problema) +  ' - ' + d + ' - ' + alg + ' *********************\n')
+			f.write('\n******************** Politica ' + str(problema) +  ' - '  + d + ' *********************\n')
+			for tupla in politica:
+				f.write(str(tupla))
+			f.write('\n******************** Valor ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
+			f.write(str(V))
+			f.write('\n******************** Tempo ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
+			f.write(str(t))
+			print('Pobrlema ' + str(problema) +  ' - '  + d + ' - ' + alg + 'concluido')
+	except Exception as e:
+		print("\nDeu ruim\n")
+		f.write(str(e) + "\n")
+
+	finally:
+		f.close()
+	
+
+if __name__ == '__main__':
+	
+	rodaTudo(0, 0, 0)
 
