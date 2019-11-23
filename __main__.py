@@ -412,12 +412,12 @@ def rodaTudo(algoritmo, problemas, det):
 				    for j in range(1, tamGrid + 1):
 				        estado = (i-1)*20  + (j-1) + 1
 				        if  estado in lista_estados:
-				            f.write('x', ' ', end = '')
+				            f.write('x ')
 				        elif estado in list_states:
-				            f.write(1, ' ', end = '')
+				            f.write('1 ')
 				        else:
-				            f.write(0, ' ', end = '')
-				    f.write()
+				            f.write('0 ')
+				    f.write('\n')
 
 
 
