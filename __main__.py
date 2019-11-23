@@ -3,9 +3,6 @@ import numpy as np
 from scipy.sparse import csr_matrix
 import time
 
-
-
-
 def carrega_arquivo(nome_arquivo,tamanhoGrid):
     crs = open(nome_arquivo, "r")
     curenty_action = ''
@@ -428,7 +425,7 @@ def rodaTudo(algoritmo, problemas, det):
 			f.write('\n******************** Valor ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			
 			for v_estado in range(1, len(value)):
-				f.write(str(v_estado) + ': ' + str(V[v_estado]) + '\n')
+				f.write(str(v_estado) + ': ' + str(value[v_estado]) + '\n')
 			f.write('\n******************** Tempo ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			f.write(str(t) + ' milissegundos\n')
 			f.write(str(iteracoes) + ' iteracoes\n')
@@ -444,7 +441,7 @@ def rodaTudo(algoritmo, problemas, det):
 
 if __name__ == '__main__':
 	
-	problemas = [1]
-	rodaTudo(1, problemas, 1)
+	problemas = [1, 2, 3, 4, 5]
+	rodaTudo(0, problemas, 1)
 	print('Acabou! :)')
 
