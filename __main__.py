@@ -389,6 +389,7 @@ def rodaTudo(algoritmo, problemas, det):
 			G, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state, M = carrega_arquivo(nome_arquivo, tamGrid)
 			S = tamGrid*tamGrid + 1
 			
+			f.write('\n\n******************** PROBLEMA ' + str(problema) +  ' - ' + d + ' - ' + alg + ' *********************\n')
 			value = []
 			iteracoes = 0
 			if algoritmo == 0:
@@ -421,7 +422,6 @@ def rodaTudo(algoritmo, problemas, det):
 
 
 
-			f.write('\n\n******************** PROBLEMA ' + str(problema) +  ' - ' + d + ' - ' + alg + ' *********************\n')
 			f.write('\n******************** Politica ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			for tupla in politica:
 				f.write(str(tupla) + '\n')
