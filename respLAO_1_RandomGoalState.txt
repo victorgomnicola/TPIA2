@@ -1,0 +1,51 @@
+Inicio dos resultados
+valueIteration() missing 1 required positional argument: 'iteracoes'
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados
+tuple indices must be integers or slices, not list
+Inicio dos resultados

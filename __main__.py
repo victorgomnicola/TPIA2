@@ -173,7 +173,7 @@ def carrega_arquivo(nome_arquivo,tamanhoGrid):
 
 
 
-def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpistola, V, iteracoes):
+def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpistola, V):
     
     A = len(matrix_probabilties)
     S = numStates
@@ -266,7 +266,6 @@ def achievableStates(G,G1,s):
 def rebuildGv(G, G1, V, initial_state):
     Gv_novo = [initial_state]
     melhor_estado = initial_state
-
     while True:
         estados_alcancaveis = []
         acao_estado = []
@@ -284,6 +283,7 @@ def rebuildGv(G, G1, V, initial_state):
             
         estado_atual = melhor_estado
         melhor_estado = estados_alcancaveis[np.argmin(V[estados_alcancaveis])]
+        
         acao_melhor_estado = acao_estado[np.argmin(V[estados_alcancaveis])]
        
         for p in G[acao_melhor_estado][estado_atual]:
@@ -317,7 +317,7 @@ def retorna_politica(G, grafo_otimo, V):
     return politica
     
 
-def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates, iteracoes):
+def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
     V = M.copy()
     F = [initial_state]
     I = []
@@ -325,7 +325,6 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates, iteracoes):
     Gv = [initial_state]
     
     cont = 0
-
     while True:
         
         cont += 1
@@ -347,9 +346,10 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates, iteracoes):
         
         Z = achievableStates(G, G1, s)
         
-        V = valueIteration(G, Z, goal_state, numStates, 0.01, V)
+        V, iteracoes = valueIteration(G, Z, goal_state, numStates, 0.01, V)
 
         Gv = rebuildGv(G, G1, V, initial_state)
+        
         
     politica = retorna_politica(G, Gv, V)
     return politica, cont
@@ -381,7 +381,7 @@ def rodaTudo(algoritmo, problemas, det):
 		f.write("Inicio dos resultados\n")
 
 		for problema in problemas:
-			print('Iniciando pobreza ' + str(problema) +  ' - '  + d + ' - ' + alg)
+			print('Iniciando problema ' + str(problema) +  ' - '  + d + ' - ' + alg)
 			tamGrid = int(list_tamGrid[cont])
 			cont += 1
 			nome_arquivo = "TestesGrid/" + d + "/navigation_" + str(problema) + ".net"
@@ -389,18 +389,19 @@ def rodaTudo(algoritmo, problemas, det):
 			G, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state, M = carrega_arquivo(nome_arquivo, tamGrid)
 			S = tamGrid*tamGrid + 1
 			
-
+			value = []
 			iteracoes = 0
 			if algoritmo == 0:
-				V = np.zeros(S) + sys.maxsize - 1000
+				value = np.zeros(S) + sys.maxsize - 1000
 				t = current_milli_time()
-				V, iteracoes = valueIteration(G, list_states, goal_state, S, 0.01, V, iteracoes)
+				value, iteracoes = valueIteration(G, list_states, goal_state, S, 0.01, value)
 				
-				politica = retorna_politica(G, list_states, V)
+				politica = retorna_politica(G, list_states, value)
 				t = current_milli_time() - t
 			else:
 				t = current_milli_time()
-				politica, iteracoes = onde_esta_o_LAO(G, M, initial_state, goal_state, S, iteracoes)
+
+				politica, iteracoes = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
 				t = current_milli_time() - t
 				lista_estados = []
 
@@ -426,13 +427,13 @@ def rodaTudo(algoritmo, problemas, det):
 				f.write(str(tupla) + '\n')
 			f.write('\n******************** Valor ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			
-			for v_estado in range(1, len(V)):
+			for v_estado in range(1, len(value)):
 				f.write(str(v_estado) + ': ' + str(V[v_estado]) + '\n')
 			f.write('\n******************** Tempo ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
 			f.write(str(t) + ' milissegundos\n')
 			f.write(str(iteracoes) + ' iteracoes\n')
 
-			print('Pobrlema ' + str(problema) +  ' - '  + d + ' - ' + alg + 'concluido')
+			print('Problema ' + str(problema) +  ' - '  + d + ' - ' + alg + 'concluido')
 	except Exception as e:
 		print("\nDeu ruim\n")
 		f.write(str(e) + "\n")
@@ -444,6 +445,6 @@ def rodaTudo(algoritmo, problemas, det):
 if __name__ == '__main__':
 	
 	problemas = [1]
-	rodaTudo(0, problemas, 1)
+	rodaTudo(1, problemas, 1)
 	print('Acabou! :)')
 
