@@ -1,0 +1,52 @@
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+can only concatenate str (not "int") to str
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer
+Inicio dos resultados
+'numpy.float64' object cannot be interpreted as an integer

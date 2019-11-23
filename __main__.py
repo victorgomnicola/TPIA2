@@ -1,14 +1,12 @@
 import sys
 import numpy as np
 from scipy.sparse import csr_matrix
-
 import time
 
 
 
 
 def carrega_arquivo(nome_arquivo,tamanhoGrid):
-
     crs = open(nome_arquivo, "r")
     curenty_action = ''
     list_states = []
@@ -22,6 +20,7 @@ def carrega_arquivo(nome_arquivo,tamanhoGrid):
 
     index_to_state = {}
     cont = 1
+    
     
     M = np.zeros(tamanhoGrid*tamanhoGrid+1)
     tamanhoGrid = tamanhoGrid + 1
@@ -139,6 +138,8 @@ def carrega_arquivo(nome_arquivo,tamanhoGrid):
                         list_states = []
                         for a in columns:
                             replaced_state = a.replace(',','')
+                            
+
                             list_states.append(index_to_state[replaced_state])
 
                     elif curenty_session == session[1][0]:  # action
@@ -172,7 +173,7 @@ def carrega_arquivo(nome_arquivo,tamanhoGrid):
 
 
 
-def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpistola, V):
+def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpistola, V, iteracoes):
     
     A = len(matrix_probabilties)
     S = numStates
@@ -208,7 +209,7 @@ def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpi
             V[s] = minimo
         if max(abs(v_antigo - V)) < ehpistola:
             break
-
+    iteracoes = num_iteracoes
     return V
 
 
@@ -317,7 +318,7 @@ def retorna_politica(G, grafo_otimo, V):
     return politica
     
 
-def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
+def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates, iteracoes):
     V = M.copy()
     F = [initial_state]
     I = []
@@ -352,20 +353,21 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
         Gv = rebuildGv(G, G1, V, initial_state)
         
     politica = retorna_politica(G, Gv, V)
-
+    iteracoes = cont
     return politica
 
 
-def rodaTudo(algoritmo, div_arquivo, det):
+def rodaTudo(algoritmo, problemas, det):
 	
 	current_milli_time = lambda: int(round(time.time() * 1000))
+	list_tamGrid = np.zeros(len(problemas))
 
-	if div_arquivo == 0:
-		list_tamGrid = [20, 40, 60, 80, 100]
-		problemas = [1, 2, 3, 4, 5]
-	else:
-		list_tamGrid = [120, 140, 160, 180, 200]
-		problemas = [6, 7, 8, 9, 10]
+	div_arquivo = ''
+	for i in range(len(problemas)):
+		list_tamGrid[i] = int(problemas[i]*20)
+		div_arquivo += str(problemas[i]) + '_'
+
+	
 
 	if det == 0:
 		d = 'DeterministicGoalState'
@@ -376,32 +378,49 @@ def rodaTudo(algoritmo, div_arquivo, det):
 	cont = 0
 	if algoritmo == 0: alg = 'It_value'
 	else: alg = 'LAO'
-	f = open("resp" + alg + "_" + str(div_arquivo) + "_" + d + ".txt", "a")
+	f = open("resp" + alg + "_" + str(div_arquivo) + d + ".txt", "a")
 	try:
 		f.write("Inicio dos resultados\n")
 
 		for problema in problemas:
 			print('Iniciando pobreza ' + str(problema) +  ' - '  + d + ' - ' + alg)
-			tamGrid = list_tamGrid[cont]
+			tamGrid = int(list_tamGrid[cont])
 			cont += 1
 			nome_arquivo = "TestesGrid/" + d + "/navigation_" + str(problema) + ".net"
+			
 			G, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state, M = carrega_arquivo(nome_arquivo, tamGrid)
-
 			S = tamGrid*tamGrid + 1
+			
 
-
+			iteracoes = 0
 			if algoritmo == 0:
 				V = np.zeros(S) + sys.maxsize - 1000
 				t = current_milli_time()
-				valueIteration(G, list_states, goal_state, S, 0.01, V)
+				valueIteration(G, list_states, goal_state, S, 0.01, V, iteracoes)
+				
 				politica = retorna_politica(G, list_states, V)
 				t = current_milli_time() - t
 			else:
 				t = current_milli_time()
-				politica = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
+				politica = onde_esta_o_LAO(G, M, initial_state, goal_state, S, iteracoes)
 				t = current_milli_time() - t
-				for tupla in politica:
-					f.write(tupla)
+				lista_estados = []
+
+				for el in politica:
+				    lista_estados.append(el[0])
+
+				for i in range(tamGrid, 0, -1):
+				    for j in range(1, tamGrid + 1):
+				        estado = (i-1)*20  + (j-1) + 1
+				        if  estado in lista_estados:
+				            f.write('x', ' ', end = '')
+				        elif estado in list_states:
+				            f.write(1, ' ', end = '')
+				        else:
+				            f.write(0, ' ', end = '')
+				    f.write()
+
+
 
 			f.write('\n\n******************** PROBLEMA ' + str(problema) +  ' - ' + d + ' - ' + alg + ' *********************\n')
 			f.write('\n******************** Politica ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
@@ -412,7 +431,9 @@ def rodaTudo(algoritmo, div_arquivo, det):
 			for v_estado in range(1, len(V)):
 				f.write(str(v_estado) + ': ' + str(V[v_estado]) + '\n')
 			f.write('\n******************** Tempo ' + str(problema) +  ' - '  + d + ' - ' + alg + ' *********************\n')
-			f.write(str(t) + '\n')
+			f.write(str(t) + ' milissegundos\n')
+			f.write(str(iteracoes) + ' iteracoes\n')
+
 			print('Pobrlema ' + str(problema) +  ' - '  + d + ' - ' + alg + 'concluido')
 	except Exception as e:
 		print("\nDeu ruim\n")
@@ -424,5 +445,7 @@ def rodaTudo(algoritmo, div_arquivo, det):
 
 if __name__ == '__main__':
 	
-	rodaTudo(0, 0, 0)
+	problemas = [1]
+	rodaTudo(0, problemas, 1)
+	print('Acabou! :)')
 
