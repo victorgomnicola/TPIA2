@@ -209,8 +209,7 @@ def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpi
             V[s] = minimo
         if max(abs(v_antigo - V)) < ehpistola:
             break
-    iteracoes = num_iteracoes
-    return V
+    return V, num_iteracoes
 
 
 def melhorS(F, Gv, V):
@@ -353,8 +352,7 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates, iteracoes):
         Gv = rebuildGv(G, G1, V, initial_state)
         
     politica = retorna_politica(G, Gv, V)
-    iteracoes = cont
-    return politica
+    return politica, cont
 
 
 def rodaTudo(algoritmo, problemas, det):
@@ -387,7 +385,7 @@ def rodaTudo(algoritmo, problemas, det):
 			tamGrid = int(list_tamGrid[cont])
 			cont += 1
 			nome_arquivo = "TestesGrid/" + d + "/navigation_" + str(problema) + ".net"
-			
+
 			G, matrix_costs, curenty_action, list_states, dict_actions, initial_state, goal_state, M = carrega_arquivo(nome_arquivo, tamGrid)
 			S = tamGrid*tamGrid + 1
 			
@@ -396,13 +394,13 @@ def rodaTudo(algoritmo, problemas, det):
 			if algoritmo == 0:
 				V = np.zeros(S) + sys.maxsize - 1000
 				t = current_milli_time()
-				valueIteration(G, list_states, goal_state, S, 0.01, V, iteracoes)
+				V, iteracoes = valueIteration(G, list_states, goal_state, S, 0.01, V, iteracoes)
 				
 				politica = retorna_politica(G, list_states, V)
 				t = current_milli_time() - t
 			else:
 				t = current_milli_time()
-				politica = onde_esta_o_LAO(G, M, initial_state, goal_state, S, iteracoes)
+				politica, iteracoes = onde_esta_o_LAO(G, M, initial_state, goal_state, S, iteracoes)
 				t = current_milli_time() - t
 				lista_estados = []
 
