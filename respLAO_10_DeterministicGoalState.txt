@@ -1,0 +1,10 @@
+Inicio dos resultados
+
+
+******************** PROBLEMA 10 - DeterministicGoalState - LAO *********************
+'list' object has no attribute 'copy'
+Inicio dos resultados
+
+
+******************** PROBLEMA 10 - DeterministicGoalState - LAO *********************
+'list' object has no attribute 'copy'

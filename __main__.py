@@ -441,7 +441,7 @@ def rodaTudo(algoritmo, problemas, det):
 
 if __name__ == '__main__':
 	
-	problemas = [1, 2, 3, 4, 5]
-	rodaTudo(0, problemas, 1)
+	problemas = [10]
+	rodaTudo(1, problemas, 0)
 	print('Acabou! :)')
 

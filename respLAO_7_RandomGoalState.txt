@@ -1,0 +1,11 @@
+Inicio dos resultados
+
+
+******************** PROBLEMA 7 - RandomGoalState - LAO *********************
+'list' object has no attribute 'copy'
+Inicio dos resultados
+Inicio dos resultados
+
+
+******************** PROBLEMA 7 - RandomGoalState - LAO *********************
+'list' object has no attribute 'copy'
