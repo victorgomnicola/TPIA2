@@ -325,7 +325,7 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
     while True:
         
         cont += 1
-
+        # print("Iteracao: ", cont)
         s = melhorS(F, Gv, V)
 
         if not s:
@@ -349,7 +349,7 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
         
         
     politica = retorna_politica(G, Gv, V)
-    return politica, cont
+    return politica, cont, V
 
 
 def rodaTudo(algoritmo, problemas, det):
@@ -399,7 +399,7 @@ def rodaTudo(algoritmo, problemas, det):
 			else:
 				t = current_milli_time()
 
-				politica, iteracoes = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
+				politica, iteracoes, value = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
 				t = current_milli_time() - t
 				lista_estados = []
 
@@ -441,7 +441,7 @@ def rodaTudo(algoritmo, problemas, det):
 
 if __name__ == '__main__':
 	
-	problemas = [1, 2, 3, 4, 5]
-	rodaTudo(0, problemas, 1)
+	problemas = [1]
+	rodaTudo(0, problemas, 0)
 	print('Acabou! :)')
 
