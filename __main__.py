@@ -190,7 +190,7 @@ def valueIteration(matrix_probabilties, list_states, goal_state, numStates, ehpi
                         data = p.data
                         indice = p.indices
                         for i in range(len(data)):
-                            Q[a][s] += 0.99 * data[i] * V[indice[i]]
+                            Q[a][s] += 1 * data[i] * V[indice[i]]
                 else:
                     Q[a][s] = sys.maxsize - 1000
 
@@ -441,6 +441,6 @@ def rodaTudo(algoritmo, problemas, det):
 
 if __name__ == '__main__':
 	
-    problemas = [3]
+    problemas = [2]
     rodaTudo(1, problemas, 0)
     print('Acabou! :)')
