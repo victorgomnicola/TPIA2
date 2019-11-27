@@ -349,7 +349,7 @@ def onde_esta_o_LAO(G, M, initial_state, goal_state, numStates):
         
         
     politica = retorna_politica(G, Gv, V)
-    return politica, cont
+    return politica, cont, V
 
 
 def rodaTudo(algoritmo, problemas, det):
@@ -399,7 +399,7 @@ def rodaTudo(algoritmo, problemas, det):
 			else:
 				t = current_milli_time()
 
-				politica, iteracoes = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
+				politica, iteracoes, value = onde_esta_o_LAO(G, M, initial_state, goal_state, S)
 				t = current_milli_time() - t
 				lista_estados = []
 
@@ -408,7 +408,7 @@ def rodaTudo(algoritmo, problemas, det):
 
 				for i in range(tamGrid, 0, -1):
 				    for j in range(1, tamGrid + 1):
-				        estado = (i-1)*20  + (j-1) + 1
+				        estado = (i-1)*tamGrid  + (j-1) + 1
 				        if  estado in lista_estados:
 				            f.write('x ')
 				        elif estado in list_states:
@@ -441,7 +441,6 @@ def rodaTudo(algoritmo, problemas, det):
 
 if __name__ == '__main__':
 	
-	problemas = [10]
-	rodaTudo(1, problemas, 0)
-	print('Acabou! :)')
-
+    problemas = [3]
+    rodaTudo(1, problemas, 0)
+    print('Acabou! :)')
